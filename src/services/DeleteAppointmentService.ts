@@ -1,20 +1,18 @@
+import { getCustomRepository } from 'typeorm';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 
 class DeleteAppointmentService {
-  private appointmentsRepository: AppointmentsRepository;
+  public async execute(id: string): Promise<null> {
+    const appointmentsRepository = getCustomRepository(AppointmentsRepository);
 
-  constructor(appointmentsRepository: AppointmentsRepository) {
-    this.appointmentsRepository = appointmentsRepository;
-  }
-
-  execute(id: string): null {
-    const appointment = this.appointmentsRepository.findById(id);
-
-    if (!appointment) {
+    const findAppointmentInID = await appointmentsRepository.findById(id);
+    if (!findAppointmentInID) {
       throw Error('This appointment is not exists.');
     }
 
-    return this.appointmentsRepository.delete(id);
+    await appointmentsRepository.delete(findAppointmentInID);
+
+    return null;
   }
 }
 

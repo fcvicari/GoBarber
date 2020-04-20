@@ -1,50 +1,46 @@
 import { Router } from 'express';
 import { parseISO } from 'date-fns';
+import { getCustomRepository } from 'typeorm';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 import CreateAppointmentService from '../services/CreateAppointmentService';
 import DeleteAppointmentService from '../services/DeleteAppointmentService';
 
 const appointmentsRouter = Router();
-const appointmentsRepository = new AppointmentsRepository();
 
-appointmentsRouter.get('/', (request, response) => {
-  const appointments = appointmentsRepository.all();
+appointmentsRouter.get('/', async (request, response) => {
+  const appointmentsRepository = getCustomRepository(AppointmentsRepository);
+  const appointments = await appointmentsRepository.find();
 
   return response.json(appointments);
 });
 
-appointmentsRouter.delete('/:id', (request, response) => {
-  try {
-    const { id } = request.params;
-
-    const deleteAppointmentService = new DeleteAppointmentService(
-      appointmentsRepository,
-    );
-
-    deleteAppointmentService.execute(id);
-
-    return response.json();
-  } catch (err) {
-    return response.status(400).json({ error: err.message });
-  }
-});
-
-appointmentsRouter.post('/', (request, response) => {
+appointmentsRouter.post('/', async (request, response) => {
   try {
     const { provider, date } = request.body;
 
     const parsedDate = parseISO(date);
 
-    const createAppointment = new CreateAppointmentService(
-      appointmentsRepository,
-    );
+    const createAppointment = new CreateAppointmentService();
 
-    const appointment = createAppointment.execute({
+    const appointment = await createAppointment.execute({
       provider,
       date: parsedDate,
     });
 
     return response.json(appointment);
+  } catch (err) {
+    return response.status(400).json({ error: err.message });
+  }
+});
+
+appointmentsRouter.delete('/:id', async (request, response) => {
+  try {
+    const { id } = request.params;
+    const deleteAppointment = new DeleteAppointmentService();
+
+    await deleteAppointment.execute(id);
+
+    return response.json();
   } catch (err) {
     return response.status(400).json({ error: err.message });
   }
