@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import User from '../models/User';
 import ConfigUpload from '../config/upload';
+import AppError from '../errors/AppError';
 
 interface RequestDTO {
   user_id: string;
@@ -15,7 +16,7 @@ class UpdateUserAvatarService {
 
     const user = await updateavataruser.findOne(user_id);
     if (!user) {
-      throw new Error('Authenticated user not exists.');
+      throw new AppError('Authenticated user not exists.', 400);
     }
 
     if (user.avatar) {

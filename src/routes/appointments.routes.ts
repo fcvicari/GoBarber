@@ -17,35 +17,27 @@ appointmentsRouter.get('/', async (request, response) => {
 });
 
 appointmentsRouter.post('/', async (request, response) => {
-  try {
-    const { provider_id, date } = request.body;
+  const { provider_id, date } = request.body;
 
-    const parsedDate = parseISO(date);
+  const parsedDate = parseISO(date);
 
-    const createAppointment = new CreateAppointmentService();
+  const createAppointment = new CreateAppointmentService();
 
-    const appointment = await createAppointment.execute({
-      provider_id,
-      date: parsedDate,
-    });
+  const appointment = await createAppointment.execute({
+    provider_id,
+    date: parsedDate,
+  });
 
-    return response.json(appointment);
-  } catch (err) {
-    return response.status(400).json({ error: err.message });
-  }
+  return response.json(appointment);
 });
 
 appointmentsRouter.delete('/:id', async (request, response) => {
-  try {
-    const { id } = request.params;
-    const deleteAppointment = new DeleteAppointmentService();
+  const { id } = request.params;
+  const deleteAppointment = new DeleteAppointmentService();
 
-    await deleteAppointment.execute(id);
+  await deleteAppointment.execute(id);
 
-    return response.json();
-  } catch (err) {
-    return response.status(400).json({ error: err.message });
-  }
+  return response.json();
 });
 
 export default appointmentsRouter;

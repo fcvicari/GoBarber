@@ -1,5 +1,6 @@
 import { getCustomRepository } from 'typeorm';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
+import AppError from '../errors/AppError';
 
 class DeleteAppointmentService {
   public async execute(id: string): Promise<null> {
@@ -7,7 +8,7 @@ class DeleteAppointmentService {
 
     const findAppointmentInID = await appointmentsRepository.findById(id);
     if (!findAppointmentInID) {
-      throw Error('This appointment is not exists.');
+      throw new AppError('This appointment is not exists.', 400);
     }
 
     await appointmentsRepository.delete(findAppointmentInID);
