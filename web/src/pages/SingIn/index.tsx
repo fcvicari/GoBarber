@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import { FiLogIn, FiLock, FiMail } from 'react-icons/fi';
 import { Form } from '@unform/web';
@@ -22,6 +22,7 @@ interface SingInFormData {
 
 const SingIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const history = useHistory();
 
   const { singIn } = useAuth();
   const { addToast } = useToast();
@@ -39,6 +40,8 @@ const SingIn: React.FC = () => {
         });
         await schema.validate(data, { abortEarly: false });
         await singIn({ email: data.email, password: data.password });
+
+        history.push('/dashboard');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -54,7 +57,7 @@ const SingIn: React.FC = () => {
         });
       }
     },
-    [singIn, addToast],
+    [singIn, addToast, history],
   );
 
   return (
