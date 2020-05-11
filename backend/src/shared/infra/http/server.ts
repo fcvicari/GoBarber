@@ -3,8 +3,10 @@ import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import 'express-async-errors';
 import routes from '@shared/infra/http/routes';
-import '@shared/infra/typeorm/database';
 import AppError from '@shared/errors/AppError';
+
+import '@shared/infra/typeorm/database';
+import '@shared/container';
 
 const app = express();
 app.use(cors());

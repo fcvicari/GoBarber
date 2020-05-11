@@ -1,17 +1,22 @@
-import { getCustomRepository } from 'typeorm';
+import { injectable, inject } from 'tsyringe';
+
 import AppError from '@shared/errors/AppError';
-import AppointmentsRepository from '../repositories/AppointmentsRepository';
+import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 
+@injectable()
 class DeleteAppointmentService {
-  public async execute(id: string): Promise<null> {
-    const appointmentsRepository = getCustomRepository(AppointmentsRepository);
+  constructor(
+    @inject('AppointmentsRepository')
+    private appointmentsRepository: IAppointmentsRepository,
+  ) {}
 
-    const findAppointmentInID = await appointmentsRepository.findById(id);
+  public async execute(id: string): Promise<null> {
+    const findAppointmentInID = await this.appointmentsRepository.findById(id);
     if (!findAppointmentInID) {
       throw new AppError('This appointment is not exists.', 400);
     }
 
-    await appointmentsRepository.delete(findAppointmentInID);
+    await this.appointmentsRepository.delete(findAppointmentInID);
 
     return null;
   }
