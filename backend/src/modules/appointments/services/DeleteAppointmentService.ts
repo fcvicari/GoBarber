@@ -10,7 +10,7 @@ class DeleteAppointmentService {
     private appointmentsRepository: IAppointmentsRepository,
   ) {}
 
-  public async execute(id: string): Promise<null> {
+  public async execute(id: string): Promise<void> {
     const findAppointmentInID = await this.appointmentsRepository.findById(id);
     if (!findAppointmentInID) {
       throw new AppError('This appointment is not exists.', 400);
@@ -18,7 +18,7 @@ class DeleteAppointmentService {
 
     await this.appointmentsRepository.delete(findAppointmentInID);
 
-    return null;
+    return undefined;
   }
 }
 
