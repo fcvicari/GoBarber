@@ -30,7 +30,7 @@ describe('DeleteAppointment', () => {
       fakeAppointmentsRepository,
     );
 
-    expect(
+    await expect(
       deleteAppointmentService.execute('1234567890'),
     ).rejects.toBeInstanceOf(AppError);
   });
