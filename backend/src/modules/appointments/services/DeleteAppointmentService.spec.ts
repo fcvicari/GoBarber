@@ -4,13 +4,19 @@ import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointmentsRe
 import CreateAppointmentService from './CreateAppointmentService';
 import DeleteAppointmentService from './DeleteAppointmentService';
 
+let fakeAppointmentsRepository: FakeAppointmentsRepository;
+let deleteAppointmentService: DeleteAppointmentService;
+
 describe('DeleteAppointment', () => {
-  it('should not be able to delete a appointment', async () => {
-    const fakeAppointmentsRepository = new FakeAppointmentsRepository();
-    const createAppointmentService = new CreateAppointmentService(
+  beforeEach(() => {
+    fakeAppointmentsRepository = new FakeAppointmentsRepository();
+    deleteAppointmentService = new DeleteAppointmentService(
       fakeAppointmentsRepository,
     );
-    const deleteAppointmentService = new DeleteAppointmentService(
+  });
+
+  it('should not be able to delete a appointment', async () => {
+    const createAppointmentService = new CreateAppointmentService(
       fakeAppointmentsRepository,
     );
 
@@ -25,11 +31,6 @@ describe('DeleteAppointment', () => {
   });
 
   it('do not should be able delete a appointment not exists', async () => {
-    const fakeAppointmentsRepository = new FakeAppointmentsRepository();
-    const deleteAppointmentService = new DeleteAppointmentService(
-      fakeAppointmentsRepository,
-    );
-
     await expect(
       deleteAppointmentService.execute('1234567890'),
     ).rejects.toBeInstanceOf(AppError);
