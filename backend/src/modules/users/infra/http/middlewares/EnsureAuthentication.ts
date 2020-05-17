@@ -3,7 +3,7 @@ import { verify } from 'jsonwebtoken';
 import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
 
-interface TokenPeyload {
+interface ITokenPeyload {
   iat: number;
   exp: number;
   sub: string;
@@ -25,7 +25,7 @@ function EnsureAuthentication(
   try {
     const decoded = verify(token, authConfig.jwt.secret);
 
-    const { sub } = decoded as TokenPeyload;
+    const { sub } = decoded as ITokenPeyload;
 
     request.user = {
       id: sub,
