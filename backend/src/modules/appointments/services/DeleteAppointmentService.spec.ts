@@ -20,8 +20,13 @@ describe('DeleteAppointment', () => {
       fakeAppointmentsRepository,
     );
 
+    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+      return new Date(2020, 4, 21, 10).getTime();
+    });
+
     const appointment = await createAppointmentService.execute({
-      date: new Date(),
+      date: new Date(2020, 4, 21, 11),
+      client_id: '9876543210',
       provider_id: '0123456789',
     });
 
