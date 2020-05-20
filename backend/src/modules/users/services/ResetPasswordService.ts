@@ -35,7 +35,7 @@ class ResetPasswordEmailService {
       throw new AppError('User does not exists.');
     }
 
-    if (differenceInHours(userToken.created_at, Date.now())) {
+    if (differenceInHours(Date.now(), userToken.created_at) > 2) {
       throw new AppError('Token expired.');
     }
 

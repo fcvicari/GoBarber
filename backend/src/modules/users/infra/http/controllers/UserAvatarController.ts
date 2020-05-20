@@ -8,9 +8,9 @@ export default class UsersContoller {
     const user_id = request.user.id;
     const avatarFileName = request.file.filename;
 
-    const useravatarservice = container.resolve(UpdateUserAvatarService);
+    const userAvatarService = container.resolve(UpdateUserAvatarService);
 
-    const user = await useravatarservice.execute({ user_id, avatarFileName });
+    const user = await userAvatarService.execute({ user_id, avatarFileName });
 
     delete user.password;
 

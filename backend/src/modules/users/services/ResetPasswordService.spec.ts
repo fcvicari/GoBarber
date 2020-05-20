@@ -77,9 +77,8 @@ describe('SendForgotPasswordEmail', () => {
 
     const userToken = await fakeUserTokensRepository.generate(user.id);
 
-    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+    jest.spyOn(Date, 'now').mockImplementation(() => {
       const customDate = new Date();
-
       return customDate.setHours(customDate.getHours() + 3);
     });
 
