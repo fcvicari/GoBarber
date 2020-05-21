@@ -1,15 +1,18 @@
 import AppError from '@shared/errors/AppError';
 
+import FakeNotificationsRepository from '@modules/notifications/repositories/fakes/FakeNotificationsRepository';
 import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointmentsRepository';
 import CreateAppointmentService from './CreateAppointmentService';
 import DeleteAppointmentService from './DeleteAppointmentService';
 
 let fakeAppointmentsRepository: FakeAppointmentsRepository;
+let fakeNotificationsRepository: FakeNotificationsRepository;
 let deleteAppointmentService: DeleteAppointmentService;
 
 describe('DeleteAppointment', () => {
   beforeEach(() => {
     fakeAppointmentsRepository = new FakeAppointmentsRepository();
+    fakeNotificationsRepository = new FakeNotificationsRepository();
     deleteAppointmentService = new DeleteAppointmentService(
       fakeAppointmentsRepository,
     );
@@ -18,6 +21,7 @@ describe('DeleteAppointment', () => {
   it('should not be able to delete a appointment', async () => {
     const createAppointmentService = new CreateAppointmentService(
       fakeAppointmentsRepository,
+      fakeNotificationsRepository,
     );
 
     jest.spyOn(Date, 'now').mockImplementationOnce(() => {
