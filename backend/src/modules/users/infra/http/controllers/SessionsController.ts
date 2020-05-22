@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 import AuthUserService from '@modules/users/services/AuthUserService';
 
 export default class SessionsContoller {
@@ -10,8 +11,6 @@ export default class SessionsContoller {
 
     const { user, token } = await authUser.execute({ email, password });
 
-    delete user.password;
-
-    return response.json({ user, token });
+    return response.json({ user: classToClass(user), token });
   }
 }
