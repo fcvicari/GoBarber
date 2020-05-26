@@ -1,14 +1,18 @@
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointmentsRepository';
 import ListProvidersAppointmentsService from './ListProvidersAppointmentsService';
 
 let fakeAppointmentsRepository: FakeAppointmentsRepository;
+let fakeCacheProvider: FakeCacheProvider;
 let listProvidersAppointmentsService: ListProvidersAppointmentsService;
 
 describe('ListProvidersAppointments', () => {
   beforeEach(() => {
     fakeAppointmentsRepository = new FakeAppointmentsRepository();
+    fakeCacheProvider = new FakeCacheProvider();
     listProvidersAppointmentsService = new ListProvidersAppointmentsService(
       fakeAppointmentsRepository,
+      fakeCacheProvider,
     );
   });
 
@@ -26,6 +30,13 @@ describe('ListProvidersAppointments', () => {
     });
 
     const appointments = await listProvidersAppointmentsService.execute({
+      provider_id: 'providerOne',
+      day: 21,
+      month: 5,
+      year: 2020,
+    });
+
+    await listProvidersAppointmentsService.execute({
       provider_id: 'providerOne',
       day: 21,
       month: 5,
