@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add @type/rate-limiter-flexible -D
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add @type/redis -D
 
 PATH: 
   C:\Python27\;C:\Python27\Scripts;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Embarcadero\Studio\20.0\bin;C:\Users\Public\Documents\Embarcadero\Studio\20.0\Bpl;C:\Program Files (x86)\Embarcadero\Studio\20.0\bin64;C:\Users\Public\Documents\Embarcadero\Studio\20.0\Bpl\Win64;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\TortoiseGit\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Users\fcvic\AppData\Local\Android\Sdk\platform-tools;C:\Users\fcvic\AppData\Local\Android\Sdk\tools;C:\Aplicativos\Git\cmd;C:\Program Files\nodejs\;C:\Users\fcvic\AppData\Local\Microsoft\WindowsApps;;C:\Aplicativos\Microsoft VS Code\bin;C:\Users\fcvic\AppData\Local\Yarn\bin;C:\Aplicativos\Docker Toolbox;C:\Users\fcvic\AppData\Roaming\npm
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@type%2frate-limiter-flexible: Not found
+  Error: https://registry.yarnpkg.com/@type%2fredis: Not found
       at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66056:18)
       at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140665:22)
       at Request.emit (events.js:310:20)
@@ -58,6 +58,7 @@ npm manifest:
       "nodemailer": "^6.4.6",
       "pg": "^8.0.2",
       "rate-limiter-flexible": "^2.1.6",
+      "redis": "^3.0.2",
       "reflect-metadata": "^0.1.13",
       "tsyringe": "^4.2.0",
       "typeorm": "^0.2.24",
@@ -4757,7 +4758,7 @@ Lockfile:
       indent-string "^2.1.0"
       strip-indent "^1.0.1"
   
-  redis-commands@1.5.0:
+  redis-commands@1.5.0, redis-commands@^1.5.0:
     version "1.5.0"
     resolved "https://registry.yarnpkg.com/redis-commands/-/redis-commands-1.5.0.tgz#80d2e20698fe688f227127ff9e5164a7dd17e785"
     integrity sha512-6KxamqpZ468MeQC3bkWmCB1fp56XL64D4Kf0zJSwDZbVLLm7KFkoIcHrgRvQ+sk8dnhySs7+yBg94yIkAK7aJg==
@@ -4773,6 +4774,16 @@ Lockfile:
     integrity sha1-tm2CjNyv5rS4pCin3vTGvKwxyLQ=
     dependencies:
       redis-errors "^1.0.0"
+  
+  redis@^3.0.2:
+    version "3.0.2"
+    resolved "https://registry.yarnpkg.com/redis/-/redis-3.0.2.tgz#bd47067b8a4a3e6a2e556e57f71cc82c7360150a"
+    integrity sha512-PNhLCrjU6vKVuMOyFu7oSP296mwBkcE6lrAjruBYG5LgdSqtRBoVQIylrMyVZD/lkF24RSNNatzvYag6HRBHjQ==
+    dependencies:
+      denque "^1.4.1"
+      redis-commands "^1.5.0"
+      redis-errors "^1.2.0"
+      redis-parser "^3.0.0"
   
   reflect-metadata@^0.1.13:
     version "0.1.13"
