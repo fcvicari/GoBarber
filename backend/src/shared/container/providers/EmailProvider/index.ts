@@ -10,6 +10,6 @@ const providers = {
 };
 
 container.registerSingleton<IMailProvider>(
-  'MailProvider',
+  'EmailProvider',
   providers[MailConfig.driver],
 );
