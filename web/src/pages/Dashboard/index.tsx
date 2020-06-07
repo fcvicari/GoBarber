@@ -4,7 +4,7 @@ import ptBR from 'date-fns/locale/pt-BR';
 import DayPicker, { DayModifiers } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
-import { FiPower, FiClock } from 'react-icons/fi';
+import { FiPower, FiClock, FiTrash2 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import logoImg from '../../assets/logo.svg';
 import {
@@ -91,6 +91,19 @@ const Dashboard: React.FC = () => {
       return <img src={user_image} alt={user_name} />;
     }
     return <img src={logoImg} alt="No avatar" />;
+  }
+
+  async function deleteAppointment(id: string): Promise<void> {
+    await api.delete(`/appointments/${id}`);
+    console.log(id);
+
+    console.log(appointments);
+    const newAppointments = appointments.filter(
+      (appointment) => appointment.id !== id,
+    );
+    console.log(newAppointments);
+
+    setAppointments(newAppointments);
   }
 
   const disabledDays = useMemo(() => {
@@ -208,6 +221,13 @@ const Dashboard: React.FC = () => {
                   )}
 
                   <strong>Fernando Cezar Vicari</strong>
+
+                  <button
+                    type="button"
+                    onClick={() => deleteAppointment(appointment.id)}
+                  >
+                    <FiTrash2 />
+                  </button>
                 </div>
               </Appointment>
             ))}
@@ -234,6 +254,13 @@ const Dashboard: React.FC = () => {
                   )}
 
                   <strong>Fernando Cezar Vicari</strong>
+
+                  <button
+                    type="button"
+                    onClick={() => deleteAppointment(appointment.id)}
+                  >
+                    <FiTrash2 />
+                  </button>
                 </div>
               </Appointment>
             ))}

@@ -17,6 +17,7 @@ describe('DeleteAppointment', () => {
     fakeAppointmentsRepository = new FakeAppointmentsRepository();
     fakeNotificationsRepository = new FakeNotificationsRepository();
     deleteAppointmentService = new DeleteAppointmentService(
+      fakeCacheProvider,
       fakeAppointmentsRepository,
     );
   });
@@ -39,13 +40,35 @@ describe('DeleteAppointment', () => {
     });
 
     expect(
-      await deleteAppointmentService.execute(appointment.id),
+      await deleteAppointmentService.execute('0123456789', appointment.id),
     ).toBeUndefined();
+  });
+
+  it('should not be able to delete a appointment for outher provider', async () => {
+    const createAppointmentService = new CreateAppointmentService(
+      fakeAppointmentsRepository,
+      fakeNotificationsRepository,
+      fakeCacheProvider,
+    );
+
+    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+      return new Date(2020, 4, 21, 10).getTime();
+    });
+
+    const appointment = await createAppointmentService.execute({
+      date: new Date(2020, 4, 21, 11),
+      client_id: '9876543210',
+      provider_id: '0123456789',
+    });
+
+    await expect(
+      deleteAppointmentService.execute('0123456', appointment.id),
+    ).rejects.toBeInstanceOf(AppError);
   });
 
   it('do not should be able delete a appointment not exists', async () => {
     await expect(
-      deleteAppointmentService.execute('1234567890'),
+      deleteAppointmentService.execute('0123456789', '1234567890'),
     ).rejects.toBeInstanceOf(AppError);
   });
 });

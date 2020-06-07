@@ -94,7 +94,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
   }
 
   public async delete(appointment: Appointment): Promise<void> {
-    await this.ormRepository.delete(appointment);
+    await this.ormRepository.remove(appointment);
   }
 }
 

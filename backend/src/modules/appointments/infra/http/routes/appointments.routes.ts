@@ -22,6 +22,8 @@ appointmentsRouter.post(
   appointmentsController.create,
 );
 
+appointmentsRouter.delete('/:id', appointmentsController.delete);
+
 appointmentsRouter.get('/me', providerAppointmentsController.create);
 
 export default appointmentsRouter;

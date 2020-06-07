@@ -216,6 +216,20 @@ export const Appointment = styled.div`
       color: #fff;
       font-size: 20px;
     }
+
+    button {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      background: transparent;
+      border: none;
+
+      svg {
+        color: #fff;
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
 `;
 
