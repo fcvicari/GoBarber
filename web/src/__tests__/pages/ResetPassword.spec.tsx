@@ -82,7 +82,7 @@ describe('ResetPassowrod Page', () => {
     });
   });
 
-  it('should be able to reset password without token', async () => {
+  it('should not be able to reset password without token', async () => {
     mockedToken.mockReturnValue(mockLocation.withoutToken);
 
     const { getByPlaceholderText, getByText } = render(<ResetPassorwd />);
@@ -110,7 +110,7 @@ describe('ResetPassowrod Page', () => {
     });
   });
 
-  it('should be able to reset password with password not informad', async () => {
+  it('should not be able to reset password with password not informad', async () => {
     const { getByPlaceholderText, getByText } = render(<ResetPassorwd />);
 
     const passwordConfirmationField = getByPlaceholderText(
@@ -121,6 +121,27 @@ describe('ResetPassowrod Page', () => {
     fireEvent.change(passwordConfirmationField, {
       target: { value: '123456789' },
     });
+
+    fireEvent.click(buttonElement);
+
+    await wait(() => {
+      expect(mockedHistoryPush).not.toHaveBeenCalled();
+    });
+  });
+
+  it('should not be able to reset password with password confirmation diferent to password', async () => {
+    const { getByPlaceholderText, getByText } = render(<ResetPassorwd />);
+
+    const passwordField = getByPlaceholderText('Nova senha');
+    const passwordConfirmationField = getByPlaceholderText(
+      'Confirmação da senha',
+    );
+    const buttonElement = getByText('Alterar senha');
+
+    fireEvent.change(passwordConfirmationField, {
+      target: { value: '123456789' },
+    });
+    fireEvent.change(passwordField, { target: { value: '987654321' } });
 
     fireEvent.click(buttonElement);
 
